@@ -1,42 +1,41 @@
-# 🚀 AWS EC2 Web Server Setup Guide
+# AWS EC2 Web Server Setup Guide
 
-## 📌 Objective
- Ye guide aapko step-by-step AWS EC2 instance launch karke Apache Web Server setup aur run karna sikhaata hai 🌐
-
+📌 Objective
+- This guide provides a step-by-step approach to launching an Amazon EC2 instance and configuring an Apache Web Server using a user data script. The goal is to deploy a simple, publicly accessible web server on AWS.
 ---
 
-## 🔹 Prerequisites 📋
-
-- ☁️ AWS Account
-- 🐧 Basic knowledge of Linux commands
-- 🔐 SSH client (Linux/macOS) ya PuTTY (Windows)
-- 🌍 Web browser
-  
+### 🔹 Prerequisites
+- An active AWS account
+- Basic knowledge of Linux commands
+- An SSH client
+- Linux/macOS: Terminal
+- Windows: PuTTY or OpenSSH
+- A modern web browser
 ---
 
-## 1️⃣ Launching EC2 Instance 🖥️
-
-- AWS Console me login karein 🔑
-- Search EC2 → Open EC2 Dashboard
-- Click Launch Instance 🚀
-- Configure Instance:
+## 1️⃣ Launch an EC2 Instance
+- Log in to the AWS Management Console
+- Search for EC2 and open the EC2 Dashboard
+- Click Launch Instance
+### Step 2: Configure Instance
 - Name and Tags: My Web Server
-- Operating System: Select Amazon Linux 2 / Ubuntu (Linux recommended) 🐧
-- Key Pair 🔐:
+- Operating System: Amazon Linux 2 (recommended)
+- Instance Type: Default (e.g., t2.micro for free tier)
+### Step 3: Key Pair Configuration
 - Select Create new key pair
-- Name: mywebserver-key
-- Type: RSA
-- Click Create key pair → mywebserver-key.pem file automatically download ho jayega
-  
----
-## ⚠️ Important: Key file safe jagah pe rakhein
+- Key pair name: mywebserver-key
+- Key pair type: RSA
+- Download the .pem file
 
-- Network Settings 🌐:
-- Allow SSH (Port 22) from your IP
-- Allow HTTP (Port 80) from anywhere
-- Storage 💾: Default ya apne requirement ke hisaab se configure karein
-- Advanced Details → User Data 🧾: Neeche diya gaya script paste karein
+### ⚠️ Important:
+Store the key pair securely. Without it, SSH access to the instance is not possible.
 
+- Step 4: Network Settings
+- Allow SSH (Port 22) from your IP address
+- Allow HTTP (Port 80) from anywhere (0.0.0.0/0)
+- Storage: Default settings or as per requirement
+- Step 5: User Data Script
+- In Advanced details → User data, paste the following script:
 ```
 #!/bin/bash
 sudo yum update -y
@@ -55,48 +54,41 @@ echo "<html>
 <h1>Welcome to Apache Web Server on Amazon Linux!</h1>
 </html>" | sudo tee /var/www/html/index.html
 ```
-## 2️⃣ EC2 Instance Verification ✅
 
-- AWS Management Console me EC2 Dashboard open karein
-- Instances section me jaakar apna instance select karein
-- Aapka instance “My Web Server” naam se dikhai dega
-- Instance ID par click karein aur details open karein
-- Public IPv4 Address copy karein 📎
-- Kisi bhi web browser me Public IP paste karein 🌍
-- ➡️ Agar Apache sahi se run ho raha hai, to aapka HTML Web Page browser me load ho jayega 🎉
-
-## 3️⃣ Security Group Configuration 🔐
-- EC2 Dashboard → Instances me instance select karein
-- Security tab open karein
-- Associated Security Group link par click karein
-- Edit Inbound Rules par click karein
-
-## ⚠️ Important Points:
-
-- Agar HTTP (Port 80) rule delete kar diya gaya hai, to web server browser se access nahi hoga ❌
-- Server access wapas lane ke liye:
-- HTTP (Port 80) ko Allow karein
-- Source: 0.0.0.0/0 (Public Access)
-- Changes Save karein 💾
-
-## ⚡ Best Practices / Tips ⭐
-
-- 🔐 Key Pair hamesha safe jagah par store karein:
-  Key pair ke bina SSH login possible nahi hota
-
-- 🌐 Web server ko publically access karne ke liye:
-  HTTP (80) ya HTTPS (443) security group me open hona zaroori hai
-
-- 🧾 User Data Script sirf first boot ke time execute hoti hai
-  Instance restart karne se script dobara run nahi hoti
- Script change karne ke liye new instance launch karna hota hai
-
-
+- Click Launch Instance.
 ---
+
+## 2️⃣ Verify EC2 Instance and Web Server
+- Go to EC2 → Instances
+- Select the instance named My Web Server
+- Copy the Public IPv4 Address
+- Paste the IP address into a web browser
+
+- ✅ If Apache is running correctly, the welcome page will load in the browser.
+---
+
+## 3️⃣ Security Group Verification
+- Select the EC2 instance
+- Open the Security tab
+- Click the associated Security Group
+- Select Edit inbound rules
+- Important Notes
+- Ensure HTTP (Port 80) is allowed
+- Source should be set to 0.0.0.0/0 for public access
+- Save the changes
+
+- ❌ If HTTP is not allowed, the web server will not be accessible from the browser.
+---
+
+##⚡ Best Practices
+- Always store your key pair securely
+- Open only required ports in the security group
+- User data scripts run only during the first boot
+- To modify the user data script, a new instance launch is required
+
 ## 👨‍💻 Author
 
-**Kumlesh Kurre**  
- IT Support & Network Engineer  
+Kumlesh Kurre
+IT Support & Network Engineer
 
-⭐ If you find this project helpful, please give it a star on GitHub.
-
+⭐ If you find this project useful, please consider starring the repository.
