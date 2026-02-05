@@ -36,7 +36,7 @@ Store the key pair securely. Without it, SSH access to the instance is not possi
 - Storage: Default settings or as per requirement
 - Step 5: User Data Script
 - In Advanced details → User data, paste the following script:
-```
+```jss
 #!/bin/bash
 sudo yum update -y
 
